@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: mlr-student-portal
+    runtime: node
+    plan: free
+    buildCommand: npm run install:all && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 22.12.0
+      - key: PORT
+        value: 10000

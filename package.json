@@ -1,0 +1,17 @@
+{
+  "name": "mlr-student-portal",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node run-dev.js",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "install:all": "npm install --prefix backend && npm install --prefix frontend",
+    "build": "npm --prefix frontend run build",
+    "start": "node backend/server.js"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

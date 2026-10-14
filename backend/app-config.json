@@ -1,0 +1,7 @@
+{
+  "command": "node server.js",
+  "stack": "node20",
+  "env_variables": {
+    "NODE_ENV": "production"
+  }
+}

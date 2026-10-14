@@ -1,0 +1,8 @@
+{
+  "appsail": [
+    {
+      "source": "backend",
+      "name": "mlr-student-portal-backend"
+    }
+  ]
+}
