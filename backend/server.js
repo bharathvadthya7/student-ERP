@@ -666,6 +666,50 @@ if (fs.existsSync(distPath)) {
     }
     res.sendFile(path.join(distPath, "index.html"));
   });
+} else {
+  // Informative landing page when running in standalone API mode on Render
+  app.get("/", (req, res) => {
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(`<!DOCTYPE html>
+<html>
+  <head>
+    <title>MLR Student Portal API Backend</title>
+    <style>
+      body { font-family: system-ui, -apple-system, sans-serif; background: #0b1329; color: #f8fafc; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 85vh; margin: 0; }
+      .card { background: #131f37; border: 1px solid #1e3a5f; border-radius: 14px; padding: 36px; max-width: 620px; width: 100%; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+      h1 { color: #38bdf8; margin: 10px 0 6px; font-size: 24px; }
+      .badge { display: inline-flex; align-items: center; gap: 6px; background: #15803d; color: #ffffff; font-weight: 700; padding: 4px 12px; border-radius: 9999px; font-size: 12px; }
+      p { color: #94a3b8; line-height: 1.6; font-size: 14px; }
+      ul { background: #080d1a; padding: 16px 28px; border-radius: 8px; border: 1px solid #1e293b; list-style-type: square; }
+      li { color: #cbd5e1; margin: 8px 0; font-family: monospace; font-size: 13px; }
+      a { color: #38bdf8; text-decoration: none; font-weight: 600; }
+      a:hover { text-decoration: underline; }
+      .info-box { background: rgba(56, 189, 248, 0.1); border-left: 4px solid #38bdf8; padding: 12px 16px; border-radius: 6px; font-size: 13px; color: #bae6fd; margin-top: 20px; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <span class="badge">● BACKEND RUNNING SUCCESSFULLY</span>
+      <h1>MLR Student Portal — REST API Service</h1>
+      <p>Institutional Backend for <strong>MLR Institute of Technology (UGC Autonomous)</strong> · II B.Tech I Sem (CSE-G) · Room MG 107 · 69 Students Seeded in SQLite.</p>
+      
+      <p><strong>Active API Endpoints:</strong></p>
+      <ul>
+        <li><a href="/api/health" target="_blank">GET /api/health</a> &nbsp;— Database Health & Status</li>
+        <li><a href="/api/timetable" target="_blank">GET /api/timetable</a> &nbsp;— Live Dynamic Timetable (CSE-G)</li>
+        <li><a href="/api/students" target="_blank">GET /api/students</a> &nbsp;— 69 Verified Student Directory</li>
+        <li>POST /api/auth/login &nbsp;— Roll Number Authentication</li>
+      </ul>
+
+      <div class="info-box">
+        💡 <strong>Frontend Hosting:</strong> The React Student Portal UI is hosted on <strong>Vercel</strong>.<br/>
+        In your Vercel project, set the Environment Variable:<br/>
+        <code style="color: #ffffff; font-weight: 700;">VITE_API_BASE_URL = https://${req.get('host')}</code>
+      </div>
+    </div>
+  </body>
+</html>`);
+  });
 }
 
 app.listen(PORT, () => {
