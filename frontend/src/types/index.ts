@@ -146,3 +146,12 @@ export interface ClassInfo {
   classIncharge: string;
   dateRange: string;
 }
+
+export type BgTheme = "midnight" | "aurora" | "royal" | "light";
+
+export interface ThemeOption {
+  id: BgTheme;
+  name: string;
+  icon: string;
+  gradient: string;
+}

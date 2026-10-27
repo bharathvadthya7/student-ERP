@@ -1,12 +1,25 @@
 import React, { useState } from "react";
-import { Student } from "../types";
+import { Student, BgTheme } from "../types";
 import { loginStudent } from "../services/api";
 
 interface LoginPageProps {
   onLoginSuccess: (student: Student) => void;
+  currentTheme?: BgTheme;
+  onThemeChange?: (theme: BgTheme) => void;
 }
 
-export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
+const themes: { id: BgTheme; label: string; icon: string }[] = [
+  { id: "midnight", label: "Midnight", icon: "🌌" },
+  { id: "aurora", label: "Aurora", icon: "✨" },
+  { id: "royal", label: "Royal", icon: "🎓" },
+  { id: "light", label: "Daylight", icon: "☀️" }
+];
+
+export const LoginPage: React.FC<LoginPageProps> = ({
+  onLoginSuccess,
+  currentTheme = "midnight",
+  onThemeChange
+}) => {
   const [username, setUsername] = useState("25R21A05JP");
   const [password, setPassword] = useState("25R21A05JP");
   const [showPassword, setShowPassword] = useState(false);
@@ -55,8 +68,27 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
 
   return (
     <main className="login-screen">
+      <div className="login-theme-bar">
+        <span className="login-theme-caption">🎨 Background:</span>
+        <div className="theme-switcher">
+          {themes.map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              className={`theme-pill ${currentTheme === t.id ? "active" : ""}`}
+              onClick={() => onThemeChange && onThemeChange(t.id)}
+              title={`Switch to ${t.label} background`}
+            >
+              <span className="theme-icon">{t.icon}</span>
+              <span className="theme-label">{t.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="login-decoration decoration-one" />
       <div className="login-decoration decoration-two" />
+      <div className="login-decoration decoration-three" />
 
       <form className="login-card" onSubmit={handleSubmit}>
         <div className="college-mark">

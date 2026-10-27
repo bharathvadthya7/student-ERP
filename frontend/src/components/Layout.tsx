@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Student, PageId } from "../types";
+import { Student, PageId, BgTheme } from "../types";
 import { Sidebar, navItems } from "./Sidebar";
 import { Topbar } from "./Topbar";
 
@@ -8,6 +8,8 @@ interface LayoutProps {
   activePage: PageId;
   onNavigate: (page: PageId) => void;
   onLogout: () => void;
+  currentTheme: BgTheme;
+  onThemeChange: (theme: BgTheme) => void;
   children: React.ReactNode;
 }
 
@@ -16,6 +18,8 @@ export const Layout: React.FC<LayoutProps> = ({
   activePage,
   onNavigate,
   onLogout,
+  currentTheme,
+  onThemeChange,
   children
 }) => {
   const [mobileNav, setMobileNav] = useState(false);
@@ -23,7 +27,12 @@ export const Layout: React.FC<LayoutProps> = ({
   const activeItem = navItems.find((n) => n.id === activePage) || {
     id: activePage,
     icon: "◉",
-    label: activePage === "profile" ? "Student Profile" : "Dashboard"
+    label:
+      activePage === "profile"
+        ? "Student Profile"
+        : activePage === "students"
+        ? "Class Directory"
+        : "Dashboard"
   };
 
   return (
@@ -42,6 +51,8 @@ export const Layout: React.FC<LayoutProps> = ({
           student={student}
           activeTitle={activeItem.label}
           onOpenMobileNav={() => setMobileNav(true)}
+          currentTheme={currentTheme}
+          onThemeChange={onThemeChange}
         />
 
         <div className="page-content">

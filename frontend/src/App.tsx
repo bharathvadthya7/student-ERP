@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Student, PageId } from "./types";
+import { Student, PageId, BgTheme } from "./types";
 import { Layout } from "./components/Layout";
 import { LoginPage } from "./pages/LoginPage";
 import { DashboardPage } from "./pages/DashboardPage";
@@ -18,6 +18,14 @@ export const App: React.FC = () => {
   const [selectedProfile, setSelectedProfile] = useState<Student | null>(null);
   const [page, setPage] = useState<PageId>("home");
   const [checkingAuth, setCheckingAuth] = useState<boolean>(true);
+  const [theme, setTheme] = useState<BgTheme>(() => {
+    return (localStorage.getItem("mlr_portal_bg") as BgTheme) || "midnight";
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-bg-theme", theme);
+    localStorage.setItem("mlr_portal_bg", theme);
+  }, [theme]);
 
   // Restore session from localStorage if present
   useEffect(() => {
@@ -60,7 +68,13 @@ export const App: React.FC = () => {
   }
 
   if (!student) {
-    return <LoginPage onLoginSuccess={handleLoginSuccess} />;
+    return (
+      <LoginPage
+        onLoginSuccess={handleLoginSuccess}
+        currentTheme={theme}
+        onThemeChange={setTheme}
+      />
+    );
   }
 
   let content: React.ReactNode;
@@ -100,6 +114,8 @@ export const App: React.FC = () => {
       activePage={page}
       onNavigate={setPage}
       onLogout={handleLogout}
+      currentTheme={theme}
+      onThemeChange={setTheme}
     >
       {content}
     </Layout>

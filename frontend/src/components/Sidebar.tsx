@@ -7,8 +7,7 @@ export const navItems: NavItem[] = [
   { id: "attendance", icon: "▦", label: "Attendance" },
   { id: "marks", icon: "▤", label: "Marks & Results" },
   { id: "status", icon: "◉", label: "Student Status" },
-  { id: "downloads", icon: "⇩", label: "Downloads" },
-  { id: "students", icon: "♙", label: "Class Directory" }
+  { id: "downloads", icon: "⇩", label: "Downloads" }
 ];
 
 interface SidebarProps {

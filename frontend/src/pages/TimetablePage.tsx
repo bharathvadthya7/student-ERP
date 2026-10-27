@@ -76,9 +76,12 @@ export const TimetablePage: React.FC<TimetablePageProps> = ({ student }) => {
         <div
           className="notice"
           style={{
-            background: "linear-gradient(135deg, #eef9f2, #e0f6e9)",
-            borderLeft: "4px solid #28a745",
-            marginBottom: "20px"
+            background: "linear-gradient(135deg, rgba(34, 197, 94, 0.16), rgba(16, 185, 129, 0.12))",
+            borderLeft: "4px solid #22c55e",
+            border: "1px solid rgba(34, 197, 94, 0.35)",
+            borderRadius: "12px",
+            marginBottom: "20px",
+            color: "var(--text-main)"
           }}
         >
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
@@ -86,11 +89,11 @@ export const TimetablePage: React.FC<TimetablePageProps> = ({ student }) => {
               <span className="pill green" style={{ animation: "pulse 2s infinite" }}>
                 ● ONGOING CLASS NOW
               </span>
-              <h3 style={{ margin: "6px 0 2px", color: "#192b45" }}>
+              <h3 style={{ margin: "6px 0 2px", color: "var(--text-heading)" }}>
                 Period {ongoingSlot.period}: {ongoingSlot.name} ({ongoingSlot.subject})
               </h3>
-              <p style={{ margin: 0, fontSize: "13px", color: "var(--muted)" }}>
-                Time: <strong>{ongoingSlot.time_slot}</strong> &nbsp;•&nbsp; Faculty: <strong>{ongoingSlot.faculty}</strong> &nbsp;•&nbsp; Room/Lab: <strong>{ongoingSlot.room}</strong>
+              <p style={{ margin: 0, fontSize: "13px", color: "var(--text-muted)" }}>
+                Time: <strong style={{ color: "var(--text-heading)" }}>{ongoingSlot.time_slot}</strong> &nbsp;•&nbsp; Faculty: <strong style={{ color: "var(--text-heading)" }}>{ongoingSlot.faculty}</strong> &nbsp;•&nbsp; Room/Lab: <strong style={{ color: "var(--text-heading)" }}>{ongoingSlot.room}</strong>
               </p>
             </div>
             <span className="pill blue" style={{ fontSize: "12px" }}>
@@ -120,21 +123,25 @@ export const TimetablePage: React.FC<TimetablePageProps> = ({ student }) => {
       {viewMode === "daily" && (
         <>
           {/* Day Tabs */}
-          <div style={{ display: "flex", gap: "6px", marginBottom: "16px", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: "8px", marginBottom: "16px", flexWrap: "wrap" }}>
             {daysList.map((day) => {
               const isToday = day === data?.currentDay;
               const isSelected = day === activeDay;
               return (
                 <button
                   key={day}
-                  className={`pill ${isSelected ? "blue" : "secondary"}`}
+                  type="button"
+                  className={`pill ${isSelected ? "blue" : ""}`}
                   style={{
                     cursor: "pointer",
                     padding: "8px 16px",
                     fontWeight: 700,
-                    border: isSelected ? "none" : "1px solid var(--border)",
-                    background: isSelected ? "var(--navy)" : "#ffffff",
-                    color: isSelected ? "#ffffff" : "inherit"
+                    fontSize: "12px",
+                    border: isSelected ? "1px solid var(--border-focus)" : "1px solid var(--border)",
+                    background: isSelected ? "linear-gradient(135deg, #2563eb, #1d4ed8)" : "var(--surface)",
+                    color: isSelected ? "#ffffff" : "var(--text-main)",
+                    boxShadow: isSelected ? "0 4px 14px rgba(37, 99, 235, 0.4)" : "none",
+                    transition: "all 0.2s ease"
                   }}
                   onClick={() => handleSelectDay(day)}
                 >
@@ -171,16 +178,17 @@ export const TimetablePage: React.FC<TimetablePageProps> = ({ student }) => {
                     <React.Fragment key={slot.id || idx}>
                       {/* Render lunch break row after period 3 */}
                       {idx === 3 && (
-                        <tr style={{ background: "#f8faff", fontStyle: "italic" }}>
+                        <tr style={{ background: "rgba(56, 189, 248, 0.08)", fontStyle: "italic", borderTop: "1px dashed var(--border)", borderBottom: "1px dashed var(--border)" }}>
                           <td>🍽️</td>
-                          <td><strong>12:20 - 01:10</strong></td>
-                          <td colSpan={4}><strong>LUNCH BREAK</strong></td>
-                          <td><span className="pill">Break</span></td>
+                          <td><strong style={{ color: "var(--navy)" }}>12:20 - 01:10</strong></td>
+                          <td colSpan={4}><strong style={{ color: "var(--text-heading)", letterSpacing: "1px" }}>LUNCH BREAK</strong></td>
+                          <td><span className="pill orange">Break</span></td>
                         </tr>
                       )}
                       <tr
                         style={{
-                          background: slot.status === "Ongoing" && activeDay === data?.currentDay ? "#f2fff5" : "inherit"
+                          background: slot.status === "Ongoing" && activeDay === data?.currentDay ? "rgba(34, 197, 94, 0.16)" : "inherit",
+                          borderLeft: slot.status === "Ongoing" && activeDay === data?.currentDay ? "3px solid #22c55e" : "none"
                         }}
                       >
                         <td><strong>Period {slot.period}</strong></td>
@@ -243,7 +251,7 @@ export const TimetablePage: React.FC<TimetablePageProps> = ({ student }) => {
                     3<br />
                     <span style={{ fontSize: "11px", fontWeight: 400 }}>11:20-12:20</span>
                   </th>
-                  <th style={{ background: "#eef2f8", color: "var(--navy)", fontWeight: 800 }}>
+                  <th style={{ background: "rgba(56, 189, 248, 0.12)", color: "var(--navy)", fontWeight: 800 }}>
                     12:20-1:10
                   </th>
                   <th>
@@ -266,51 +274,57 @@ export const TimetablePage: React.FC<TimetablePageProps> = ({ student }) => {
                   const isToday = dayName === data?.currentDay;
 
                   return (
-                    <tr key={dayName} style={{ background: isToday ? "#f6fbff" : "inherit" }}>
+                    <tr
+                      key={dayName}
+                      style={{
+                        background: isToday ? "rgba(56, 189, 248, 0.14)" : "inherit",
+                        borderLeft: isToday ? "3px solid #38bdf8" : "none"
+                      }}
+                    >
                       <td>
-                        <strong>{dayName.slice(0, 3)}</strong>
+                        <strong style={{ color: "var(--text-heading)" }}>{dayName.slice(0, 3)}</strong>
                         {isToday && <div><span className="pill green" style={{ fontSize: "9px", padding: "2px 6px" }}>Today</span></div>}
                       </td>
 
                       {/* Period 1 */}
                       <td>
-                        <strong>{slots[0]?.subject || "—"}</strong>
-                        <div style={{ fontSize: "10px", color: "var(--muted)" }}>{slots[0]?.room}</div>
+                        <strong style={{ color: "var(--text-heading)" }}>{slots[0]?.subject || "—"}</strong>
+                        <div style={{ fontSize: "10px", color: "var(--text-muted)" }}>{slots[0]?.room}</div>
                       </td>
 
                       {/* Period 2 */}
                       <td>
-                        <strong>{slots[1]?.subject || "—"}</strong>
-                        <div style={{ fontSize: "10px", color: "var(--muted)" }}>{slots[1]?.room}</div>
+                        <strong style={{ color: "var(--text-heading)" }}>{slots[1]?.subject || "—"}</strong>
+                        <div style={{ fontSize: "10px", color: "var(--text-muted)" }}>{slots[1]?.room}</div>
                       </td>
 
                       {/* Period 3 */}
                       <td>
-                        <strong>{slots[2]?.subject || "—"}</strong>
-                        <div style={{ fontSize: "10px", color: "var(--muted)" }}>{slots[2]?.room}</div>
+                        <strong style={{ color: "var(--text-heading)" }}>{slots[2]?.subject || "—"}</strong>
+                        <div style={{ fontSize: "10px", color: "var(--text-muted)" }}>{slots[2]?.room}</div>
                       </td>
 
                       {/* Lunch */}
-                      <td style={{ background: "#f8faff", fontWeight: 700, color: "var(--muted)" }}>
+                      <td style={{ background: "rgba(56, 189, 248, 0.06)", fontWeight: 700, color: "var(--navy)", borderLeft: "1px dashed var(--border)", borderRight: "1px dashed var(--border)", letterSpacing: "1px" }}>
                         L<br />U<br />N<br />C<br />H
                       </td>
 
                       {/* Period 4 */}
                       <td>
-                        <strong>{slots[3]?.subject || "—"}</strong>
-                        <div style={{ fontSize: "10px", color: "var(--muted)" }}>{slots[3]?.room}</div>
+                        <strong style={{ color: "var(--text-heading)" }}>{slots[3]?.subject || "—"}</strong>
+                        <div style={{ fontSize: "10px", color: "var(--text-muted)" }}>{slots[3]?.room}</div>
                       </td>
 
                       {/* Period 5 */}
                       <td>
-                        <strong>{slots[4]?.subject || "—"}</strong>
-                        <div style={{ fontSize: "10px", color: "var(--muted)" }}>{slots[4]?.room}</div>
+                        <strong style={{ color: "var(--text-heading)" }}>{slots[4]?.subject || "—"}</strong>
+                        <div style={{ fontSize: "10px", color: "var(--text-muted)" }}>{slots[4]?.room}</div>
                       </td>
 
                       {/* Period 6 */}
                       <td>
-                        <strong>{slots[5]?.subject || "—"}</strong>
-                        <div style={{ fontSize: "10px", color: "var(--muted)" }}>{slots[5]?.room}</div>
+                        <strong style={{ color: "var(--text-heading)" }}>{slots[5]?.subject || "—"}</strong>
+                        <div style={{ fontSize: "10px", color: "var(--text-muted)" }}>{slots[5]?.room}</div>
                       </td>
                     </tr>
                   );

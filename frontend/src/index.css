@@ -1,8 +1,8 @@
 
 :root {
   font-family: 'DM Sans', Arial, sans-serif;
-  color: #192b45;
-  background: #f4f7fc;
+  color: var(--text-main, #f1f5f9);
+  background-color: var(--bg-base, #080c16);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

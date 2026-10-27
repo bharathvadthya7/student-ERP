@@ -178,7 +178,7 @@ export const AttendancePage: React.FC<AttendancePageProps> = ({ student }) => {
               })}
             </tbody>
             <tfoot>
-              <tr style={{ background: "#f8faff", fontWeight: 700 }}>
+              <tr style={{ background: "var(--surface-hover)", fontWeight: 700, color: "var(--text-heading)" }}>
                 <td colSpan={3}>TOTAL CUMULATIVE ATTENDANCE</td>
                 <td style={{ textAlign: "center" }}>{stats?.totalConducted ?? student.totalConducted}</td>
                 <td style={{ textAlign: "center" }}>{stats?.totalAttended ?? student.totalAttended}</td>
